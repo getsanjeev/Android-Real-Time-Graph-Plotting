@@ -24,6 +24,8 @@ public class mainActivity extends AppCompatActivity implements OnChartGestureLis
 
     private LineChart mChart_1;
     private LineChart mChart_2;
+    ArrayList<String> xVals = new ArrayList<String>();
+    ArrayList<Entry> yVals = new ArrayList<Entry>();
 
 
     @Override
@@ -39,7 +41,6 @@ public class mainActivity extends AppCompatActivity implements OnChartGestureLis
         mChart_1.setOnChartValueSelectedListener(this);
         mChart_1.setDrawGridBackground(false);
         // add data
-        setData();
         // get the legend (only possible after setting data)
         Legend l = mChart_1.getLegend();
         l.setForm(Legend.LegendForm.LINE);
@@ -49,76 +50,68 @@ public class mainActivity extends AppCompatActivity implements OnChartGestureLis
         // enable scaling and dragging
         mChart_1.setDragEnabled(true);
         mChart_1.setScaleEnabled(true);
+        for (int i= 0;i<100;i++)
+        {
+            updateList(5,15);
+        }
     }
 
     private ArrayList<String> setXAxisValues()
     {
-        ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add(0,"A");
-        xVals.add(1,"B");
-        xVals.add(2,"C");
-        xVals.add(3,"D");
-        xVals.add(4,"E");
-        xVals.add(5,"F");
-        xVals.add(6,"G");
-        xVals.add(7,"H");
-        xVals.add(8,"I");
-        xVals.add(9,"J");
-        xVals.add(10,"K");
-
+        xVals = new ArrayList<String>();
+        String temp;
+        for(int i = 0;i<=20;i++)
+        {
+            temp = String.valueOf(i*10);
+            xVals.add(i,temp);
+        }
         return xVals;
     }
 
-    private ArrayList<Entry> setYAxisValues(int value, int x){
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
-        int j;
-        for(int i = 0;i<11;i++)
-        {
-            j = i+5;
-            yVals.add(new Entry(value,j ));
-            if (i%2 ==0)
-            {
-                value = value+10;
-                //x = x+10;
-            }
-            value = value + 10;
-        }
-        return yVals;
+    private void updateList (int r, int theta)
+    {
+        xVals = new ArrayList<String>();
+        yVals = new ArrayList<Entry>();
+        Double x = r*(Math.cos((theta*3.14)/180));
+        int xDis = x.intValue();
+        Double y = r*(Math.sin((theta*3.14)/180));
+        int yDis = y.intValue();
+        int index;
+        index = 0;
+        //double values = (double)value;
+        String temp;
+        xVals.add(index,Integer.toString(xDis));
+        yVals.add(new Entry(yDis, index));
+        setData();
     }
 
     private void setData()
     {
         LineDataSet set1;
-        LineDataSet set2;
-        ArrayList<String> xVals = setXAxisValues();
-        ArrayList<Entry> yVals = setYAxisValues(0,0);
+      //  LineDataSet set2;
         // create a dataset and give it a type
         set1 = new LineDataSet(yVals, "DataSet 1");
         set1.setFillAlpha(110);
-
-        xVals = setXAxisValues();
-        yVals = setYAxisValues(10,0);
-        set2 = new LineDataSet(yVals, "DataSet 2");
-
-        set2.setFillAlpha(90);
+      //  set2 = new LineDataSet(yVals, "DataSet 2");
+        //set2.setFillAlpha(90);
 
         // set the line to be drawn like this "- - - - - -"
         set1.setColor(Color.BLUE);
-        set2.setColor(Color.GREEN);
+        //set2.setColor(Color.GREEN);
         set1.setCircleColor(Color.BLUE);
-        set2.setCircleColor(Color.GREEN);
+        //set2.setCircleColor(Color.GREEN);
         set1.setLineWidth(1f);
-        set2.setLineWidth(1f);
+        //set2.setLineWidth(1f);
         set1.setCircleRadius(3f);
-        set2.setCircleRadius(3f);
+        //set2.setCircleRadius(3f);
         set1.setDrawCircleHole(false);
-        set2.setDrawCircleHole(false);
+        //set2.setDrawCircleHole(false);
         set1.setValueTextSize(9f);
-        set2.setValueTextSize(9f);
+        //set2.setValueTextSize(9f);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
-        dataSets.add(set2);
+      //  dataSets.add(set2);
         // create a data object with the datasets
         LineData data = new LineData(xVals, dataSets);
         // set data

@@ -1,5 +1,6 @@
 package com.example.sanjeev.realtimegraphplotting;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -31,5 +32,25 @@ public class mainActivity2 extends AppCompatActivity
                 //new DataPoint(4, 6)
         });
         graph.addSeries(series);
+        series.setTitle("Random Curve 1");
+        series.setColor(Color.GREEN);
+        series.setDrawDataPoints(true);
+        series.setDataPointsRadius(10);
+        series.setThickness(8);
+
+
+        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 3),
+                new DataPoint(1, 3),
+                new DataPoint(2, 6),
+                new DataPoint(3, 2),
+                new DataPoint(4, 5)
+        });
+        graph.addSeries(series2);
+        series2.setTitle("Random Curve 1");
+        series2.setColor(Color.BLUE);
+        series2.setDrawDataPoints(true);
+        series2.setDataPointsRadius(10);
+        series2.setThickness(8);
     }
 }
